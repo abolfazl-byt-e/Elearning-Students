@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 # my file --------------------
 app.py.conf
+mysql-data/
