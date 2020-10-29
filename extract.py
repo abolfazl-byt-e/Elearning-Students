@@ -105,5 +105,12 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
         #TODO separate student_code from email
         student_code_or_email = soup.find('dt', text='آدرس پست الکترونیک').next_sibling.a.get_text().strip('@sun.hsu.ac.ir')
         print(student_code_or_email)
+
+        # get { role } of student
+        student_role = soup.find('dt', text="نقش‌ها").next_sibling.a.get_text()
+        print(student_role)
+
+
+        
     
     
