@@ -76,3 +76,9 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
     result = session_requests.get(participants_link, headers = dict(referer = participants_link))
     soup = BeautifulSoup(result.content, 'html.parser')
     
+    # Get number of student in the class
+    participant_count = int(soup.find('div', {"class" : "userlist"}).p.get_text().strip('تعداد شرکت‌کنندگان : '))
+    print("participant : ", participant_count)
+
+    
+    
