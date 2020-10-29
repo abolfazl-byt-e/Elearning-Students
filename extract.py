@@ -80,5 +80,12 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
     participant_count = int(soup.find('div', {"class" : "userlist"}).p.get_text().strip('تعداد شرکت‌کنندگان : '))
     print("participant : ", participant_count)
 
+    # Get currect page of all students in the current class
+    showall = soup.find('div', {'id':'showall'})
+    if showall:
+        all_students_page_link = showall.a.get('href')
+    else:
+        all_students_page_link = participants_link
+    print("showall: ", all_students_page_link)
     
     
