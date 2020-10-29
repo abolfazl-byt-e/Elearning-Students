@@ -126,3 +126,15 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
         student_lessons = soup.find('dt', text="درس‌ها").next_sibling.ul.find_all('li')
         for lesson in student_lessons:
             print(lesson.get_text())
+
+        # get students picture url {if he/she has}
+        try:
+            student_img = soup.find('img', {'class' : "defaultuserpic"})
+        except expression as identifier:
+            pass
+        student_img = soup.find('div', {'class' : "page-header-image"}).a.img
+        if "defaultuserpic" in student_img.get('class'):
+            student_img = None
+        else:
+            student_img = student_img.get('src')
+        print(student_img)
