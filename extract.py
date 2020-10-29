@@ -100,5 +100,10 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
         soup = BeautifulSoup(result.content, 'html.parser')
         student_name = soup.find_all('div', attrs={'class' : "page-context-header"}) 
         print(student_name[1].h2.get_text())
+
+        # get { student code -or- email } from every student
+        #TODO separate student_code from email
+        student_code_or_email = soup.find('dt', text='آدرس پست الکترونیک').next_sibling.a.get_text().strip('@sun.hsu.ac.ir')
+        print(student_code_or_email)
     
     
