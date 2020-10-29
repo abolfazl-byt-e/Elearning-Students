@@ -59,12 +59,13 @@ print('سلام ',user ,sep=" ")
 
 for link in soup.find_all('a', {"class" : "list-group-item list-group-item-action", "data-parent-key" : "mycourses"}):
     url = link.get('href')
+    print("lesson url: ", url)
     result = session_requests.get(url, headers = dict(referer = url))
     soup = BeautifulSoup(result.content, 'html.parser')
 
     # Get the name of each lesson
     header = soup.find('div', {'class' : 'page-context-header'}).h1.get_text()
-    print(header)
+    print("name of lesson : ", header)
 
     # Get link of students page
     participants = soup.find('a', {"data-key" : "participants"}).get('href')
