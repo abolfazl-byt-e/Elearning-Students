@@ -113,3 +113,16 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
         # get { role } of student
         student_role = soup.find('dt', text="نقش‌ها").next_sibling.a.get_text()
         print(student_role)
+        
+        # get { student's lessons } 
+        #TODO go to currect page of all lessons <<done>>
+        # if number of student's lessons <= 8 
+        try:
+            student_lessons_link = soup.find('a', {'title' : "مشاهده موارد بیشتر"}).get('href')        
+        except:
+            student_lessons_link = students_link[i]
+        result = session_requests.get(student_lessons_link, headers = dict(referer = student_lessons_link))
+        soup = BeautifulSoup(result.content, 'html.parser')
+        student_lessons = soup.find('dt', text="درس‌ها").next_sibling.ul.find_all('li')
+        for lesson in student_lessons:
+            print(lesson.get_text())
