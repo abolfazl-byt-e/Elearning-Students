@@ -87,5 +87,12 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
     else:
         all_students_page_link = participants_link
     print("showall: ", all_students_page_link)
+
+    # Get special link of every student
+    result = session_requests.get(all_students_page_link, headers = dict(referer = all_students_page_link))
+    soup = BeautifulSoup(result.content, 'html.parser')
+    students_link = soup.find_all('th', {'id' : re.compile('^user-index-participants*')})
+    for i in range(0, participant_count):
+        print(students_link[i].a.get('href'))
     
     
