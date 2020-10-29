@@ -103,14 +103,13 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
 
         # get { student code -or- email } from every student
         #TODO separate student_code from email
-        student_code_or_email = soup.find('dt', text='آدرس پست الکترونیک').next_sibling.a.get_text().strip('@sun.hsu.ac.ir')
+        # if student code -or- email was hidden
+        try:
+            student_code_or_email = soup.find('dt', text='آدرس پست الکترونیک').next_sibling.a.get_text().strip('@sun.hsu.ac.ir')
+        except:
+            student_code_or_email = "hidden"
         print(student_code_or_email)
-
+        
         # get { role } of student
         student_role = soup.find('dt', text="نقش‌ها").next_sibling.a.get_text()
         print(student_role)
-
-
-        
-    
-    
