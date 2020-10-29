@@ -2,6 +2,7 @@ import requests
 import config
 from lxml import html
 from bs4 import BeautifulSoup
+import re
 
 ''' get all of students inforamtion from elearning...'''
 
@@ -68,8 +69,10 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
     print("name of lesson : ", header)
 
     # Get link of students page
-    participants = soup.find('a', {"data-key" : "participants"}).get('href')
-    print(participants)
-    
+    participants_link = soup.find('a', {"data-key" : "participants"}).get('href')
+    print("participants_link : ", participants_link)
 
+    ### start the Get all students
+    result = session_requests.get(participants_link, headers = dict(referer = participants_link))
+    soup = BeautifulSoup(result.content, 'html.parser')
     
