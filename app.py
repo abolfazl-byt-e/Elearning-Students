@@ -5,17 +5,17 @@ from bs4 import BeautifulSoup
 
 ''' get all of students inforamtion from elearning...'''
 
-# get {authenticity_token} from first page of elearning site for login
+# get {authenticity_token} from first page of elearning site for login >>session code<<
 session_requests = requests.session()
 
-login_url = "https://elearning.hsu.ac.ir/login/index.php/"
+login_url = "https://elearning.hsu.ac.ir/login/index.php/" #login page
 result = session_requests.get(login_url)
 
 tree = html.fromstring(result.text)
 authenticity_token = list(set(tree.xpath("//input[@name='logintoken']/@value")))[0]
 
 # start the login
-# get username and password for login {test}
+# get username and password for login
 
 payload = {
 	"username": config.username, 
@@ -30,7 +30,7 @@ result = session_requests.post(
 )
 # login done
 
-url = 'https://elearning.hsu.ac.ir/my/index.php?lang=en'
+url = 'https://elearning.hsu.ac.ir/my/index.php?lang=en' #میز کار
 result = session_requests.get(
 	url, 
 	headers = dict(referer = url)
@@ -53,3 +53,5 @@ online_user = soup.findAll('div', {'class': "user"})
 
 for i in online_user:
     print(i.find('img').next_sibling)
+
+# connection completly OK
