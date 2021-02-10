@@ -5,6 +5,7 @@ from lxml import html
 from bs4 import BeautifulSoup
 import re
 
+''' create connection to mysql '''
 mydb = mysql.connector.connect(
     host=config.mysql_host,
     user=config.mysql_user,
@@ -14,8 +15,12 @@ mydb = mysql.connector.connect(
     use_unicode=True)
 
 mycursor = mydb.cursor()
+
+''' create database '''
 # mycursor.execute("CREATE DATABASE if not exists hakimqt")
 # id INT AUTO_INCREMENT, \
+
+''' create table '''
 mycursor.execute("CREATE TABLE IF NOT EXISTS students (\
                     name VARCHAR(255), \
                     code VARCHAR(255), \
@@ -130,7 +135,7 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
         # print(student_name)
 
         # get { student code -or- email } from every student
-        #TODO separate student_code from email
+        #TODO separate student_code from email <<done>>
         # if student code -or- email was hidden
         #
         try:
@@ -139,7 +144,7 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
             student_code_or_email = "hidden"
         # print(student_code_or_email)
         
-        # get { role } of student
+        # get { role } of student 
         #
         student_role = soup.find('dt', text="نقش‌ها").next_sibling.a.get_text()
         # print(student_role)
@@ -164,16 +169,18 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
         #
         try:
             student_img = soup.find('img', {'class' : "defaultuserpic"})
-        except expression as identifier:
+        except Exception as identifier:
             pass
         student_img = soup.find('div', {'class' : "page-header-image"}).a.img
-        #
+        # if student doesn's have picture
         if "defaultuserpic" in student_img.get('class'):
             student_img = None
         else:
             student_img = student_img.get('src')
         print(student_img)
 
+        ''' insert add data to mysql database '''
+        
         query = ("INSERT IGNORE INTO students (name, code, role, lessons, img) VALUES (%s, %s, %s, %s, %s)")
         value = (student_name, student_code_or_email, student_role, student_lessons_name, student_img)
         # query = "INSERT INTO students (name, code, role, lessons, img) VALUES (%s, %s, %s, %s, %s);"
