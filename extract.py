@@ -130,7 +130,7 @@ for link in soup.find_all('a', {"class" : "list-group-item list-group-item-actio
         # get students picture url {if he/she has}
         try:
             student_img = soup.find('img', {'class' : "defaultuserpic"})
-        except expression as identifier:
+        except Exception as identifier:
             pass
         student_img = soup.find('div', {'class' : "page-header-image"}).a.img
         if "defaultuserpic" in student_img.get('class'):
